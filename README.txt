@@ -11,6 +11,7 @@ Current Progress/Contributions:
 
 DUSTIN LIU:
 - conversion and recreation of the physical game into a Java code format
+  - Card and Player classes
 
 MARCUS CHONG:
 - documentation and creation of the multithreaded server and client
@@ -19,3 +20,14 @@ MARCUS CHONG:
 BRIAN DO:
 - documentation and creation of the multithreaded server and client
 - front end management (abstract/poster drafting)
+
+
+GOALS
+- finalize all class files needed for a fully functioning game
+- working command line implementation of the game
+- working command line implementation of the game with user-selected amount of players
+- abstract submission
+- GUI drafting and creation
+- GUI implementation of the game
+- poster drafting and creation
+- presentation 
