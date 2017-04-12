@@ -1,6 +1,6 @@
 import java.util.Arrays;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
 
 public class SushiGoGame
 {
@@ -16,16 +16,15 @@ public class SushiGoGame
                             9,9,9,9,10,10,10,10,10,10,
                             11,11,11,11,11,11,11,11,11,11,
                             11,11,11,11,12,12,12,12
-                          } // 108 Cards
+                          }; // 108 Cards
   public int[] playerPoints = {0,0,0,0,0};
   public int[] playerPuddingCount = {0,0,0,0,0};
   public int[] playerMakiCount = {0,0,0,0,0};
-  public int[] playerPuddingCount = {0,0,0,0,0};
   public int[] playerDumplingCount = {0,0,0,0,0};
   public int[] playerTempuraCount = {0,0,0,0,0};
   public int[] playerSashimiCount = {0,0,0,0,0};
-  public boolean[] playerWasabi = {false,false,false,false,false};
-  public boolean[] playerChopsticks = {false,false,false,false,false};
+  public int[] playerWasabiCount = {0,0,0,0,0,0};
+  public int[] playerChopsticksCount = {0,0,0,0,0};
   public int player1Cards[] = {0,0,0,0,0,0,0,0,0,0};
   public int player2Cards[] = {0,0,0,0,0,0,0,0,0,0};
   public int player3Cards[] = {0,0,0,0,0,0,0,0,0,0};
@@ -51,12 +50,22 @@ public class SushiGoGame
   //Total: 108
   //Types: 12
 
-  SushiGoGame(int playersNum)
+  SushiGoGame(int amountOfPlayers)
   {
     //Initialize Players
-    players = playerNum;
     shuffleArray(gameDeck);
+    dealCards(amountOfPlayers);
 
+
+  }
+  public void playRound()
+  {
+
+    round++;
+  }
+  public void dealCards(int amountOfPlayers)
+  {
+    int players = amountOfPlayers;
     if (players == 2)//10 cards each
     {
       int cardCount = 0;
@@ -103,7 +112,6 @@ public class SushiGoGame
         cardCount++;
       }
     }
-
   }
   static void shuffleArray(int[] ar)
   {
@@ -126,8 +134,8 @@ public class SushiGoGame
       playerDumplingCount[x] = 0;
       playerTempuraCount[x] = 0;
       playerSashimiCount[x] = 0;
-      playerWasabi[x] = false;
-      playerChopsticks[x] = false;
+      playerWasabiCount[x] = 0;
+      playerChopsticksCount[x] = 0;
     }
   }
 
