@@ -1,0 +1,13 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ABOUT
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sushi Go is a pick and pass card game. The goal is to grab the best combination of sushi dishes as they whiz by. 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+HOW TO PLAY
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+The game takes place over three rounds. To start a round all players simultaneously choose any 1 card from their hands that they would like to keep and place it facedown in front of them. When each player has done this, everyone reveals heir chosen cards. 
+After revealing cards, pass your remaining hand facedown to the player on your left. Everyone picks up their new hands and the next turn begins. You have a new and smaller hand to choose from. 
+Face up cards remains with you until the end of the round, when they are scored. I is helpful to group cards of the same type together. 
+
+
