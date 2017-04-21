@@ -145,7 +145,7 @@ public class SushiGoGame
         for (int x = 0; x < 10; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player1Cards[x] + " ");
+          System.out.print(numDisplay + "." + player1Cards[x] + " ");
         }
       }
       else if (playerCount == 3)
@@ -153,7 +153,7 @@ public class SushiGoGame
         for (int x = 0; x < 9; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player1Cards[x] + " ");
+          System.out.print(numDisplay + "." + player1Cards[x] + " ");
         }
       }
       else if (playerCount == 4)
@@ -161,7 +161,7 @@ public class SushiGoGame
         for (int x = 0; x < 8; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player1Cards[x] + " ");
+          System.out.print(numDisplay + "." + player1Cards[x] + " ");
         }
       }
       else if (playerCount == 5)
@@ -169,7 +169,7 @@ public class SushiGoGame
         for (int x = 0; x < 7; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player1Cards[x] + " ");
+          System.out.print(numDisplay + "." + player1Cards[x] + " ");
         }
       }
      }
@@ -180,7 +180,7 @@ public class SushiGoGame
          for (int x = 0; x < 10; x++)
          {
            int numDisplay = x+1;
-           System.out.println(numDisplay + "." + player2Cards[x] + " ");
+           System.out.print(numDisplay + "." + player2Cards[x] + " ");
          }
        }
        else if (playerCount == 3)
@@ -188,7 +188,7 @@ public class SushiGoGame
          for (int x = 0; x < 9; x++)
          {
            int numDisplay = x+1;
-           System.out.println(numDisplay + "." + player2Cards[x] + " ");
+           System.out.print(numDisplay + "." + player2Cards[x] + " ");
          }
        }
        else if (playerCount == 4)
@@ -196,7 +196,7 @@ public class SushiGoGame
          for (int x = 0; x < 8; x++)
          {
            int numDisplay = x+1;
-           System.out.println(numDisplay + "." + player2Cards[x] + " ");
+           System.out.print(numDisplay + "." + player2Cards[x] + " ");
          }
        }
        else if (playerCount == 5)
@@ -204,7 +204,7 @@ public class SushiGoGame
          for (int x = 0; x < 7; x++)
          {
            int numDisplay = x+1;
-           System.out.println(numDisplay + "." + player2Cards[x] + " ");
+           System.out.print(numDisplay + "." + player2Cards[x] + " ");
          }
        }
     }
@@ -215,7 +215,7 @@ public class SushiGoGame
         for (int x = 0; x < 9; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player3Cards[x] + " ");
+          System.out.print(numDisplay + "." + player3Cards[x] + " ");
         }
       }
       else if (playerCount == 4)
@@ -223,7 +223,7 @@ public class SushiGoGame
         for (int x = 0; x < 8; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player3Cards[x] + " ");
+          System.out.print(numDisplay + "." + player3Cards[x] + " ");
         }
       }
       else if (playerCount == 5)
@@ -231,7 +231,7 @@ public class SushiGoGame
         for (int x = 0; x < 7; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player3Cards[x] + " ");
+          System.out.print(numDisplay + "." + player3Cards[x] + " ");
         }
       }
     }
@@ -242,7 +242,7 @@ public class SushiGoGame
         for (int x = 0; x < 8; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player4Cards[x] + " ");
+          System.out.print(numDisplay + "." + player4Cards[x] + " ");
         }
       }
       else if (playerCount == 5)
@@ -250,7 +250,7 @@ public class SushiGoGame
         for (int x = 0; x < 7; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player4Cards[x] + " ");
+          System.out.print(numDisplay + "." + player4Cards[x] + " ");
         }
       }
     }
@@ -259,7 +259,7 @@ public class SushiGoGame
       for (int x = 0; x < 7; x++)
       {
         int numDisplay = x+1;
-        System.out.println(numDisplay + "." + player5Cards[x] + " ");
+        System.out.print(numDisplay + "." + player5Cards[x] + " ");
       }
     }
   }

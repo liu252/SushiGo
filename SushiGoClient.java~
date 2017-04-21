@@ -20,9 +20,6 @@ public class SushiGoClient
 			DataOutputStream serverOutput = new DataOutputStream(connectionSock.getOutputStream());
 
 			System.out.println("Connection made.");
-			System.out.println("--------------------------------------");
-			System.out.println("WELCOME TO SUSHI-GO!");
-			System.out.println("--------------------------------------");
 
 			//Creates new instance of the listener class and starts a thread using it.
 			SushiGoClientListener listener = new SushiGoClientListener(connectionSock);

@@ -27,8 +27,8 @@ public class SushiGoClientHandler implements Runnable
 
 			while(true)
 			{
-				String clientText = clientInput.readLine();
-				if(clientText != null)
+				int clientText = clientInput.read();
+				if(clientText != -1)
 				{
 					System.out.println("Received: " + clientText);
 

@@ -87,8 +87,6 @@ public class SushiGoClientListener implements Runnable
 					//System.out.println(serverText);
 					System.out.println("Opposing player played: " + cardName);
 					System.out.println("Cards in hand:");
-					//still testing
-					//Each Client has their own player 1 and player 2 hands. Still a working progress
 					if (playerTurn == 1)
 					{
 						game.showCards(1);
