@@ -39,7 +39,7 @@ public class SushiGoGame
                             "Sashimi","Sashimi","Sashimi","Sashimi","Sashimi",
                             "Sashimi","Sashimi","Sashimi","Sashimi","Sashimi",
                             "Sashimi","Sashimi","Sashimi","Sashimi",
-                            "ChopSticks","ChopSticks","ChopSticks","ChopSticks"
+                            "Egg","Egg","Egg","Egg"
                           }; // 108 Cards
   public int[] playerPoints = {0,0,0,0,0};
   public int[] playerPuddingCount = {0,0,0,0,0};
@@ -55,14 +55,11 @@ public class SushiGoGame
   public String player4Cards[] = new String[8];
   public String player5Cards[] = new String[7];
   public int round = 1;
-  SushiGoClientHandler handler1;
-  SushiGoClientHandler handler2;
-  boolean player1Connected = false;//variables telling if the players are connected to the game or not
-  boolean player2Connected = false;
-  boolean isPlayer1 = true;//boolean to track whose turn it is
 
 
   public int playerCount = 0;
+  public int deckCount =0;
+
   //Card Info
   //1.Pudding: 10 int PuddingCount
   //2.Egg Nigiri: 5 int Points++
@@ -88,28 +85,30 @@ public class SushiGoGame
     if (playerCount == 2)//10 cards each
     {
       int cardCount = 0;
-      for(int x = 0; x < 20; x+=2)
+      for(int x = deckCount; x < (deckCount+20); x+=2)
       {
         player1Cards[cardCount] = gameDeck[x];
         player2Cards[cardCount] = gameDeck[x+1];
         cardCount++;
       }
+      deckCount = deckCount + 20;
     }
     else if (playerCount == 3)//9 cards each
     {
       int cardCount = 0;
-      for(int x = 0; x < 27; x+=3)
+      for(int x = deckCount; x < (deckCount+27); x+=3)
       {
         player1Cards[cardCount] = gameDeck[x];
         player2Cards[cardCount] = gameDeck[x+1];
         player3Cards[cardCount] = gameDeck[x+2];
         cardCount++;
       }
+      deckCount = deckCount + 27;
     }
     else if (playerCount == 4)//8 cards each
     {
       int cardCount = 0;
-      for(int x = 0; x < 32; x+=4)
+      for(int x = deckCount; x < (deckCount+32); x+=4)
       {
         player1Cards[cardCount] = gameDeck[x];
         player2Cards[cardCount] = gameDeck[x+1];
@@ -117,11 +116,12 @@ public class SushiGoGame
         player4Cards[cardCount] = gameDeck[x+3];
         cardCount++;
       }
+      deckCount = deckCount + 32;
     }
     else if (playerCount == 5)//7 cards each
     {
       int cardCount = 0;
-      for(int x = 0; x < 32; x+=5)
+      for(int x = deckCount; x < (deckCount+35); x+=5)
       {
         player1Cards[cardCount] = gameDeck[x];
         player2Cards[cardCount] = gameDeck[x+1];
@@ -130,6 +130,7 @@ public class SushiGoGame
         player5Cards[cardCount] = gameDeck[x+4];
         cardCount++;
       }
+      deckCount = deckCount + 35;
     }
 
   }
@@ -146,11 +147,8 @@ public class SushiGoGame
       ar[i] = a;
     }
   }
-
   public void showCards(int playerNum)
   {
-	System.out.println("PlayerNum: " + playerNum);
-	System.out.println("playerCount: " + playerCount);
     if (playerNum == 1)
     {
       if (playerCount == 2)
@@ -158,7 +156,7 @@ public class SushiGoGame
         for (int x = 0; x < 10; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player1Cards[x] + " ");
+          System.out.print(numDisplay + "." + player1Cards[x] + " ");
         }
       }
       else if (playerCount == 3)
@@ -166,7 +164,7 @@ public class SushiGoGame
         for (int x = 0; x < 9; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player1Cards[x] + " ");
+          System.out.print(numDisplay + "." + player1Cards[x] + " ");
         }
       }
       else if (playerCount == 4)
@@ -174,7 +172,7 @@ public class SushiGoGame
         for (int x = 0; x < 8; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player1Cards[x] + " ");
+          System.out.print(numDisplay + "." + player1Cards[x] + " ");
         }
       }
       else if (playerCount == 5)
@@ -182,7 +180,7 @@ public class SushiGoGame
         for (int x = 0; x < 7; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player1Cards[x] + " ");
+          System.out.print(numDisplay + "." + player1Cards[x] + " ");
         }
       }
      }
@@ -193,7 +191,7 @@ public class SushiGoGame
          for (int x = 0; x < 10; x++)
          {
            int numDisplay = x+1;
-           System.out.println(numDisplay + "." + player2Cards[x] + " ");
+           System.out.print(numDisplay + "." + player2Cards[x] + " ");
          }
        }
        else if (playerCount == 3)
@@ -201,7 +199,7 @@ public class SushiGoGame
          for (int x = 0; x < 9; x++)
          {
            int numDisplay = x+1;
-           System.out.println(numDisplay + "." + player2Cards[x] + " ");
+           System.out.print(numDisplay + "." + player2Cards[x] + " ");
          }
        }
        else if (playerCount == 4)
@@ -209,7 +207,7 @@ public class SushiGoGame
          for (int x = 0; x < 8; x++)
          {
            int numDisplay = x+1;
-           System.out.println(numDisplay + "." + player2Cards[x] + " ");
+           System.out.print(numDisplay + "." + player2Cards[x] + " ");
          }
        }
        else if (playerCount == 5)
@@ -217,7 +215,7 @@ public class SushiGoGame
          for (int x = 0; x < 7; x++)
          {
            int numDisplay = x+1;
-           System.out.println(numDisplay + "." + player2Cards[x] + " ");
+           System.out.print(numDisplay + "." + player2Cards[x] + " ");
          }
        }
     }
@@ -228,7 +226,7 @@ public class SushiGoGame
         for (int x = 0; x < 9; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player3Cards[x] + " ");
+          System.out.print(numDisplay + "." + player3Cards[x] + " ");
         }
       }
       else if (playerCount == 4)
@@ -236,7 +234,7 @@ public class SushiGoGame
         for (int x = 0; x < 8; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player3Cards[x] + " ");
+          System.out.print(numDisplay + "." + player3Cards[x] + " ");
         }
       }
       else if (playerCount == 5)
@@ -244,7 +242,7 @@ public class SushiGoGame
         for (int x = 0; x < 7; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player3Cards[x] + " ");
+          System.out.print(numDisplay + "." + player3Cards[x] + " ");
         }
       }
     }
@@ -255,7 +253,7 @@ public class SushiGoGame
         for (int x = 0; x < 8; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player4Cards[x] + " ");
+          System.out.print(numDisplay + "." + player4Cards[x] + " ");
         }
       }
       else if (playerCount == 5)
@@ -263,7 +261,7 @@ public class SushiGoGame
         for (int x = 0; x < 7; x++)
         {
           int numDisplay = x+1;
-          System.out.println(numDisplay + "." + player4Cards[x] + " ");
+          System.out.print(numDisplay + "." + player4Cards[x] + " ");
         }
       }
     }
@@ -272,7 +270,7 @@ public class SushiGoGame
       for (int x = 0; x < 7; x++)
       {
         int numDisplay = x+1;
-        System.out.println(numDisplay + "." + player5Cards[x] + " ");
+        System.out.print(numDisplay + "." + player5Cards[x] + " ");
       }
     }
   }
@@ -319,17 +317,29 @@ public class SushiGoGame
     {
       playerPuddingCount[player] = playerPuddingCount[player]+1;
     }
-    else if (card.equals("Egg"))
+    else if (card.equals("Egg") && playerWasabiCount[player] == 0)
     {
       playerPoints[player] = playerPoints[player] + 1;
     }
-    else if(card.equals("Salmon"))
+    else if(card.equals("Egg") && playerWasabiCount[player] >= 1)
+    {
+      playerPoints[player] = playerPoints[player] + 3;
+    }
+    else if(card.equals("Salmon") && playerWasabiCount[player] == 0)
     {
       playerPoints[player] = playerPoints[player] + 2;
     }
-    else if(card.equals("Squid"))
+    else if(card.equals("Salmon") && playerWasabiCount[player] >= 1)
+    {
+        playerPoints[player] = playerPoints[player] + 6;
+    }
+    else if(card.equals("Squid") && playerWasabiCount[player] == 1)
     {
       playerPoints[player] = playerPoints[player] + 3;
+    }
+    else if(card.equals("Squid") && playerWasabiCount[player] >= 1)
+    {
+        playerPoints[player] = playerPoints[player] + 9;
     }
     else if(card.equals("Maki Roll (1)"))
     {
@@ -364,7 +374,155 @@ public class SushiGoGame
       playerChopsticksCount[player] = playerChopsticksCount[player] + 1;
     }
   }
-
+  public void swapCards()
+  {
+    String tempArr[] = new String[10];
+    if (playerCount == 2)
+    {
+      for (int x = 0; x < 10; x++)
+      {
+        tempArr[x] = player1Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player1Cards[x] = player2Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player2Cards[x] = tempArr[x];
+      }
+    }
+    else if (playerCount == 3)
+    {
+      for (int x = 0; x < 10; x++)
+      {
+        tempArr[x] = player1Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player1Cards[x] = player2Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player2Cards[x] = player3Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player3Cards[x] = tempArr[x];
+      }
+    }
+    else if (playerCount == 4)
+    {
+      for (int x = 0; x < 10; x++)
+      {
+        tempArr[x] = player1Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player1Cards[x] = player2Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player2Cards[x] = player3Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player3Cards[x] = player4Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player4Cards[x] = tempArr[x];
+      }
+    }
+    else if (playerCount == 5)
+    {
+      for (int x = 0; x < 10; x++)
+      {
+        tempArr[x] = player1Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player1Cards[x] = player2Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player2Cards[x] = player3Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player3Cards[x] = player4Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player4Cards[x] = player5Cards[x];
+      }
+      for (int x = 0; x < 10; x++)
+      {
+        player5Cards[x] = tempArr[x];
+      }
+    }
+  }
+  public void countPoints()
+  {
+    int highestMakiPlayer = 0;
+    int makiCount = 0;
+    for(int x = 0; x < playerCount; x++)
+    {
+      if (playerDumplingCount[x] == 5)
+      {
+        playerPoints[x] = playerPoints[x] + 15;
+      }
+      else if (playerDumplingCount[x] == 4)
+      {
+        playerPoints[x] = playerPoints[x] + 10;
+      }
+      else if (playerDumplingCount[x] == 3)
+      {
+        playerPoints[x] = playerPoints[x] + 6;
+      }
+      else if(playerDumplingCount[x] == 2)
+      {
+        playerPoints[x] = playerPoints[x] + 3;
+      }
+      else if (playerDumplingCount[x] == 1)
+      {
+        playerPoints[x] = playerPoints[x] + 1;
+      }
+      //Tempura Points
+      if(playerTempuraCount[x] >= 6 && playerTempuraCount[x] <=7)
+      {
+        playerPoints[x] = playerPoints[x] + 15;
+      }
+      else if(playerTempuraCount[x] >= 4 && playerTempuraCount[x] <= 5)
+      {
+        playerPoints[x] = playerPoints[x] + 10;
+      }
+      else if(playerTempuraCount[x] >= 2 && playerTempuraCount[x] <= 3)
+      {
+        playerPoints[x] = playerPoints[x] + 5;
+      }
+      //Sashimi Points
+      if(playerSashimiCount[x] >= 9 && playerSashimiCount[x] <= 11)
+      {
+        playerPoints[x] = playerPoints[x] + 30;
+      }
+      else if(playerSashimiCount[x] >= 6 && playerSashimiCount[x] <= 8)
+      {
+        playerPoints[x] = playerPoints[x] + 20;
+      }
+      else if(playerSashimiCount[x] >= 3 && playerSashimiCount[x] <= 5)
+      {
+        playerPoints[x] = playerPoints[x] + 10;
+      }
+      //Maki Count
+      if(playerMakiCount[x] > makiCount)
+      {
+        makiCount = playerMakiCount[x];
+        highestMakiPlayer = x;
+      }
+    }
+    playerPoints[highestMakiPlayer] = playerPoints[highestMakiPlayer] + 6;
+  }
   public void refreshRound()
   {
     for(int x = 0; x < 5; ++x)
@@ -376,6 +534,81 @@ public class SushiGoGame
       playerWasabiCount[x] = 0;
       playerChopsticksCount[x] = 0;
     }
+  }
+  public void endGame()
+  {
+    int high = 0;
+    int low = 10;
+    int highW1 = 6;
+    int highW2 = 6;
+    int lowL1 = 6;
+    int lowL2 = 6;
+    for(int x = 0; x < playerCount; x++)
+    {
+      if(playerPuddingCount[x] > high)
+      {
+        high = playerPuddingCount[x];
+        highW1 = x;
+        if(highW2 != 6)
+        {
+          if(playerPuddingCount[highW1] != playerPuddingCount[highW2])
+          {
+            highW2 = 6;
+          }
+        }
+      }
+      else if(playerPuddingCount[x] == high)
+      {
+        highW2 = x;
+      }
+
+      if(playerPuddingCount[x] < low)
+      {
+        low = playerPuddingCount[x];
+        lowL1 = x;
+        if(lowL2 != 6)
+        {
+          if(playerPuddingCount[lowL1] != playerPuddingCount[lowL2])
+          {
+            lowL2 = 6;
+          }
+        }
+      }
+      else if(playerPuddingCount[x] == low)
+      {
+        lowL2 = x;
+      }
+    }
+    if(highW2 == 6)
+    {
+      playerPoints[highW1] = playerPoints[highW1] + 6;
+    }
+    else
+    {
+      playerPoints[highW1] = playerPoints[highW1] + 3;
+      playerPoints[highW2] = playerPoints[highW2] + 3;
+    }
+    if(lowL2 == 6)
+    {
+      playerPoints[lowL1] = playerPoints[lowL1] + 6;
+    }
+    else
+    {
+      playerPoints[lowL1] = playerPoints[lowL1] + 3;
+      playerPoints[lowL2] = playerPoints[lowL2] + 3;
+    }
+    int winnerPoints = 0;
+    int winner = 6;
+    for(int x = 0; x < playerCount; x++)
+    {
+      System.out.println("Player " + (x+1) + " Score: " + playerPoints[x]);
+      if(playerPoints[x] > winnerPoints)
+      {
+        winnerPoints = playerPoints[x];
+        winner = (x+1);
+      }
+    }
+    System.out.println("Player " + winner + " Wins!");
   }
 
   public void addHandler(SushiGoClientHandler hand) //adds a handler to the list of handlers
