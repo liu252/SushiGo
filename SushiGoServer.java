@@ -8,10 +8,11 @@ import java.util.ArrayList;
 public class SushiGoServer
 {
 	private ArrayList<Socket> socketList;	//ArrayList of all client sockets connected to server.
-
+	public SushiGoGame game; //creates a game object to use to reference al the methods of the game class
 	public SushiGoServer()
 	{
 		socketList = new ArrayList<Socket>();
+		game = new SushiGoGame(2);
 	}
 
 	private void getConnection()
@@ -23,14 +24,15 @@ public class SushiGoServer
 
 			while(true)	//Infinite loop.
 			{
-				//Accepts a client socket and adds it to the array list.
-				Socket connectionSock = serverSock.accept();
-				socketList.add(connectionSock);		
+					//Accepts a client socket and adds it to the array list.
+					Socket connectionSock = serverSock.accept();
+					socketList.add(connectionSock);		
 
-				//Creates a new thread based on the updated ClientHandler and starts the thread
-				SushiGoClientHandler handler = new SushiGoClientHandler(connectionSock, this.socketList);
-				Thread theThread = new Thread(handler);
-				theThread.start();
+					//Creates a new thread based on the updated ClientHandler and starts the thread
+					SushiGoClientHandler handler = new SushiGoClientHandler(connectionSock, this.socketList, game);
+					Thread theThread = new Thread(handler);
+					theThread.start();
+					game.addHandler(handler);
 			}
 		}
 		catch(IOException e)

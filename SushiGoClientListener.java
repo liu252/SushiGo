@@ -5,11 +5,19 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.lang.Integer;
 
 public class SushiGoClientListener implements Runnable
 {
 	private Socket connectionSock = null;
-
+	public String outputString = "";
+	public boolean readOutput = true;
+	private int serverTextInt = 0;
+	private boolean start = false;
+	private String cardName = "Nothing";
+	private String data;
+	public int playerTurn = 1;
+	int cardNum;
 	SushiGoClientListener(Socket sock)
 	{
 		this.connectionSock = sock;
@@ -21,84 +29,43 @@ public class SushiGoClientListener implements Runnable
 		{
 			BufferedReader serverInput = new BufferedReader(new InputStreamReader(connectionSock.getInputStream()));
 			SushiGoGame game = new SushiGoGame(2); //For test purposes, we are going to stick to 2 players until we can get the game working
-			int playerTurn = 2; //Again, for test purposes. Will figure out another way to keep track of player's turn
 			while(true)
 			{
-				//String serverText = serverInput.readLine();
-				//Converts interger input to the cardname output
 				String serverText = serverInput.readLine();
+				//Converts interger input to the cardname output
+				//int serverText = Integer.parseInt(serverInput.readLine());
 				System.out.println("The other terminal typed: " + serverText);
-				String cardName = "";
-				if(serverText.equals("1"))
-				{
-					cardName = "Pudding";				
-				}
-				else if(serverText.equals("2"))
-				{
-					cardName = "Egg Nigiri";				
-				}
-				else if(serverText.equals("3"))
-				{
-					cardName = "Salmon Nigiri";				
-				}
-				else if(serverText.equals("4"))
-				{
-					cardName = "Squid Nigiri";				
-				}
-				else if(serverText.equals("5"))
-				{
-					cardName = "Maki Roll(1)";				
-				}
-				else if(serverText.equals("6"))
-				{
-					cardName = "Maki Roll(2)";				
-				}
-				else if(serverText.equals("7"))
-				{
-					cardName = "Maki Roll(3)";				
-				}
-				else if(serverText.equals("8"))
-				{
-					cardName = "Dumpling";				
-				}
-				else if(serverText.equals("9"))
-				{
-					cardName = "Tempura";				
-				}
-				else if(serverText.equals("10"))
-				{
-					cardName = "Wasabi";				
-				}
-				else if(serverText.equals("11"))
-				{
-					cardName = "Sashimi";				
-				}
-				else if(serverText.equals("12"))
-				{
-					cardName = "Chopsticks)";				
-				}
-				else
-				{
-					cardName = "Invalid Card Option";
-				}
-
 				if(serverInput != null)
 				{
 					//System.out.println(serverText);
-					System.out.println("Opposing player played: " + cardName);
-					System.out.println("Cards in hand:");
-					//still testing
-					//Each Client has their own player 1 and player 2 hands. Still a working progress
-					if (playerTurn == 1)
+					if(serverText.equals("your turn"))
 					{
-						game.showCards(1);
-						playerTurn = 2;
-					}
-
-					else if (playerTurn == 2)
-					{
-						game.showCards(2);
-						playerTurn = 1;
+						System.out.println("Opposing player played: " + cardName);
+						System.out.println("Cards in hand:");
+						//still testing
+						//Each Client has their own player 1 and player 2 hands. Still a working progress
+						if (game.isPlayer1)
+						{
+							game.showCards(1);
+							game.isPlayer1 = false;
+						}
+						else 
+						{
+							game.showCards(2);
+							game.isPlayer1 = true;
+						}
+						
+						Scanner keyboard = new Scanner(System.in);
+						cardNum = keyboard.nextInt();
+						game.Move(playerTurn, cardNum);
+						
+						//Turn the string into the proper format
+						String outputString = Integer.toString(cardNum);
+						//Create an output stream and send the string off.
+						DataOutputStream serverOutput = new DataOutputStream(connectionSock.getOutputStream());
+						serverOutput.writeBytes(outputString+"\n");
+						//System.out.println("yolo6");
+						
 					}
 				}
 				else
@@ -108,6 +75,9 @@ public class SushiGoClientListener implements Runnable
 					break;
 				}
 			}
+			//If the program gets here, it exits.
+			System.out.println("Thanks for playing SushiGo!");
+			System.exit(0);
 		}
 		catch(Exception e)
 		{

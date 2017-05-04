@@ -1,6 +1,12 @@
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.net.Socket;
+import java.io.DataOutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Scanner;
 
 
 public class SushiGoGame
@@ -49,6 +55,11 @@ public class SushiGoGame
   public String player4Cards[] = new String[8];
   public String player5Cards[] = new String[7];
   public int round = 1;
+  SushiGoClientHandler handler1;
+  SushiGoClientHandler handler2;
+  boolean player1Connected = false;//variables telling if the players are connected to the game or not
+  boolean player2Connected = false;
+  boolean isPlayer1 = true;//boolean to track whose turn it is
 
 
   public int playerCount = 0;
@@ -138,6 +149,8 @@ public class SushiGoGame
 
   public void showCards(int playerNum)
   {
+	System.out.println("PlayerNum: " + playerNum);
+	System.out.println("playerCount: " + playerCount);
     if (playerNum == 1)
     {
       if (playerCount == 2)
@@ -362,6 +375,23 @@ public class SushiGoGame
       playerSashimiCount[x] = 0;
       playerWasabiCount[x] = 0;
       playerChopsticksCount[x] = 0;
+    }
+  }
+
+  public void addHandler(SushiGoClientHandler hand) //adds a handler to the list of handlers
+  {
+    if(!player1Connected)//nobody is connected
+    {
+        handler1 = hand;
+        player1Connected = true;
+        handler1.sendToClient("wait");//tells them to wait until all players are connected
+    }
+    else if(!player2Connected)//connects player 2 and gives player one the first play
+    {
+      handler2 = hand;
+      player2Connected = true;
+      handler2.sendToClient("wait");//tells player 2 to wait once they are connected because it is player 1's turn
+      handler1.sendToClient("your turn");//tells player 1 to play
     }
   }
 

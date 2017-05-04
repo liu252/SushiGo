@@ -10,18 +10,34 @@ public class SushiGoClientHandler implements Runnable
 {
 	private Socket connectionSock = null;
 	private ArrayList<Socket> socketList;
+	SushiGoGame game = null;
 
 	//Constructor implemented in Sushi Go Server class.
-	SushiGoClientHandler(Socket sock, ArrayList<Socket> socketList)
+	SushiGoClientHandler(Socket sock, ArrayList<Socket> socketList, SushiGoGame g)
 	{
 		this.connectionSock = sock;
 		this.socketList = socketList;
+		this.game = g;
+	}
+		
+	public void sendToClient(String clientText)//sends messages to clients
+	{
+		try
+		{
+			DataOutputStream clientOutput = new DataOutputStream(connectionSock.getOutputStream());//creates a packet to send the message in
+			clientOutput.writeBytes(clientText + "\n");//puts the message in the packet and sends it
+			System.out.println("Sending to client: "+clientText);//displays what the message was to the console
+		} catch (Exception e)//if there is an error submitting the message it prints out that there was an error
+		{
+			System.out.println("Error: " + e.toString());
+		}
 	}
 
 	public void run()
 	{
 		try
 		{
+			
 			System.out.println("Connection made with socket " + connectionSock);
 			BufferedReader clientInput = new BufferedReader(new InputStreamReader(connectionSock.getInputStream()));
 
@@ -51,6 +67,7 @@ public class SushiGoClientHandler implements Runnable
 					break;
 				}
 			}
+			
 		}
 		catch(Exception e)
 		{

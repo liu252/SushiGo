@@ -32,8 +32,15 @@ public class SushiGoClient
 			Scanner keyboard = new Scanner(System.in);
 			while(true)
 			{
-				String data = keyboard.nextLine();
-				serverOutput.writeBytes(data + "\n");
+				//String data = keyboard.nextLine();
+				//serverOutput.writeBytes(data + "\n");
+				if(listener.readOutput)
+				{
+					//String data = keyboard.nextLine();
+					//serverOutput.writeBytes(data + "\n");
+					serverOutput.writeBytes(listener.outputString+"\n");
+					listener.readOutput = false;
+				}
 			}
 		}
 		catch(IOException e)
