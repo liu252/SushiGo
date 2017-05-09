@@ -54,7 +54,19 @@ public class SushiGoGame
   public String player3Cards[] = new String[9];
   public String player4Cards[] = new String[8];
   public String player5Cards[] = new String[7];
+  public String player1TableCards[] = new String[10];
+  public String player2TableCards[] = new String[10];
+  public String player3TableCards[] = new String[9];
+  public String player4TableCards[] = new String[8];
+  public String player5TableCards[] = new String[7];
+  public int player1TableNum = 0;
+  public int player2TableNum = 0;
+  public int player3TableNum = 0;
+  public int player4TableNum = 0;
+  public int player5TableNum = 0;
+
   public int round = 1;
+
 
 
   public int playerCount = 0;
@@ -283,30 +295,140 @@ public class SushiGoGame
       String card = player1Cards[cardNum];
       player1Cards[cardNum] = " ";
       points(1 , card);
+      player1TableCards[player1TableNum] = card;
+      player1TableNum++;
     }
     else if (playerNum == 2)
     {
       String card = player2Cards[cardNum];
       player2Cards[cardNum] = " ";
       points(2 , card);
+      player2TableCards[player2TableNum] = card;
+      player2TableNum++;
     }
     else if (playerNum == 3)
     {
       String card = player3Cards[cardNum];
       player3Cards[cardNum] = " ";
       points(3 , card);
+      player3TableCards[player3TableNum] = card;
+      player3TableNum++;
     }
     else if (playerNum == 4)
     {
       String card = player4Cards[cardNum];
       player4Cards[cardNum] = " ";
       points(4 , card);
+      player4TableCards[player4TableNum] = card;
+      player4TableNum++;
     }
     else if (playerNum == 5)
     {
       String card = player5Cards[cardNum];
       player5Cards[cardNum] = " ";
       points(5 , card);
+      player5TableCards[player5TableNum] = card;
+      player5TableNum++;
+    }
+  }
+
+  public void displayTableCards()
+  {
+    if (playerCount == 2)
+    {
+      System.out.print("Player 1 Collected Cards: ");
+      for(int x = 0; x < player1TableNum; x++)
+      {
+        System.out.print(player1TableCards[x] + ", ");
+      }
+      System.out.println();
+      System.out.print("Player 2 Collected Cards: ");
+      for(int x = 0; x < player2TableNum; x++)
+      {
+        System.out.print(player2TableCards[x] + ", ");
+      }
+      System.out.println();
+    }
+    else if (playerCount == 3)
+    {
+      System.out.print("Player 1 Collected Cards: ");
+      for(int x = 0; x < player1TableNum; x++)
+      {
+        System.out.print(player1TableCards[x] + ", ");
+      }
+      System.out.println();
+      System.out.print("Player 2 Collected Cards: ");
+      for(int x = 0; x < player2TableNum; x++)
+      {
+        System.out.print(player2TableCards[x] + ", ");
+      }
+      System.out.println();
+      System.out.print("Player 3 Collected Cards: ");
+      for(int x = 0; x < player3TableNum; x++)
+      {
+        System.out.print(player3TableCards[x] + ", ");
+      }
+      System.out.println();
+    }
+    else if (playerCount == 4)
+    {
+      System.out.print("Player 1 Collected Cards: ");
+      for(int x = 0; x < player1TableNum; x++)
+      {
+        System.out.print(player1TableCards[x] + ", ");
+      }
+      System.out.println();
+      System.out.print("Player 2 Collected Cards: ");
+      for(int x = 0; x < player2TableNum; x++)
+      {
+        System.out.print(player2TableCards[x] + ", ");
+      }
+      System.out.println();
+      System.out.print("Player 3 Collected Cards: ");
+      for(int x = 0; x < player3TableNum; x++)
+      {
+        System.out.print(player3TableCards[x] + ", ");
+      }
+      System.out.println();
+      System.out.print("Player 4 Collected Cards: ");
+      for(int x = 0; x < player4TableNum; x++)
+      {
+        System.out.print(player4TableCards[x] + ", ");
+      }
+      System.out.println();
+    }
+    else if (playerCount == 5)
+    {
+      System.out.print("Player 1 Collected Cards: ");
+      for(int x = 0; x < player1TableNum; x++)
+      {
+        System.out.print(player1TableCards[x] + ", ");
+      }
+      System.out.println();
+      System.out.print("Player 2 Collected Cards: ");
+      for(int x = 0; x < player2TableNum; x++)
+      {
+        System.out.print(player2TableCards[x] + ", ");
+      }
+      System.out.println();
+      System.out.print("Player 3 Collected Cards: ");
+      for(int x = 0; x < player3TableNum; x++)
+      {
+        System.out.print(player3TableCards[x] + ", ");
+      }
+      System.out.println();
+      System.out.print("Player 4 Collected Cards: ");
+      for(int x = 0; x < player4TableNum; x++)
+      {
+        System.out.print(player4TableCards[x] + ", ");
+      }
+      System.out.println();
+      System.out.print("Player 5 Collected Cards: ");
+      for(int x = 0; x < player5TableNum; x++)
+      {
+        System.out.print(player5TableCards[x] + ", ");
+      }
+      System.out.println();
     }
   }
 
@@ -324,6 +446,7 @@ public class SushiGoGame
     else if(card.equals("Egg") && playerWasabiCount[player] >= 1)
     {
       playerPoints[player] = playerPoints[player] + 3;
+      playerWasabiCount[player] = playerWasabiCount[player] - 1;
     }
     else if(card.equals("Salmon") && playerWasabiCount[player] == 0)
     {
@@ -332,6 +455,7 @@ public class SushiGoGame
     else if(card.equals("Salmon") && playerWasabiCount[player] >= 1)
     {
         playerPoints[player] = playerPoints[player] + 6;
+        playerWasabiCount[player] = playerWasabiCount[player] - 1;
     }
     else if(card.equals("Squid") && playerWasabiCount[player] == 1)
     {
@@ -340,6 +464,7 @@ public class SushiGoGame
     else if(card.equals("Squid") && playerWasabiCount[player] >= 1)
     {
         playerPoints[player] = playerPoints[player] + 9;
+        playerWasabiCount[player] = playerWasabiCount[player] - 1;
     }
     else if(card.equals("Maki Roll (1)"))
     {
@@ -533,6 +658,19 @@ public class SushiGoGame
       playerSashimiCount[x] = 0;
       playerWasabiCount[x] = 0;
       playerChopsticksCount[x] = 0;
+      player1TableNum = 0;
+      player2TableNum = 0;
+      player3TableNum = 0;
+      player4TableNum = 0;
+      player5TableNum = 0;
+    }
+  }
+  public void displayPoints()
+  {
+    for(int x = 0; x < playerCount; x++)
+    {
+      int player = x+1;
+      System.out.println("Player " + player + " points: " + playerPoints[x]);
     }
   }
   public void endGame()
