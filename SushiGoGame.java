@@ -18,15 +18,15 @@ public class SushiGoGame
                             "Salmon","Salmon","Salmon","Salmon","Salmon",
                             "Salmon","Salmon","Salmon","Salmon","Salmon",
                             "Squid","Squid","Squid","Squid","Squid",
-                            "Maki Roll (1)","Maki Roll (1)","Maki Roll (1)",
-                            "Maki Roll (1)","Maki Roll (1)","Maki Roll (1)",
-                            "Maki Roll (2)","Maki Roll (2)","Maki Roll (2)",
-                            "Maki Roll (2)","Maki Roll (2)","Maki Roll (2)",
-                            "Maki Roll (2)","Maki Roll (2)","Maki Roll (2)",
-                            "Maki Roll (2)","Maki Roll (2)","Maki Roll (2)",
-                            "Maki Roll (3)","Maki Roll (3)","Maki Roll (3)",
-                            "Maki Roll (3)","Maki Roll (3)","Maki Roll (3)",
-                            "Maki Roll (3)","Maki Roll (3)",
+                            "Maki_Roll_(1)","Maki_Roll_(1)","Maki_Roll_(1)",
+                            "Maki_Roll_(1)","Maki_Roll_(1)","Maki_Roll_(1)",
+                            "Maki_Roll_(2)","Maki_Roll_(2)","Maki_Roll_(2)",
+                            "Maki_Roll_(2)","Maki_Roll_(2)","Maki_Roll_(2)",
+                            "Maki_Roll_(2)","Maki_Roll_(2)","Maki_Roll_(2)",
+                            "Maki_Roll_(2)","Maki_Roll_(2)","Maki_Roll_(2)",
+                            "Maki_Roll_(3)","Maki_Roll_(3)","Maki_Roll_(3)",
+                            "Maki_Roll_(3)","Maki_Roll_(3)","Maki_Roll_(3)",
+                            "Maki_Roll_(3)","Maki_Roll_(3)",
                             "Dumpling","Dumpling","Dumpling","Dumpling",
                             "Dumpling","Dumpling","Dumpling","Dumpling",
                             "Dumpling","Dumpling","Dumpling","Dumpling",
@@ -66,11 +66,16 @@ public class SushiGoGame
   public int player5TableNum = 0;
 
   public int round = 1;
+  int state;
+  int[] rows;
+  String playerOne = "";
+  String playerTwo = "";
   public SushiGoClientHandler handler1;
   public SushiGoClientHandler handler2;
   boolean player1Connected = false;//variables telling if the players are connected to the game or not
   boolean player2Connected = false;
   boolean isPlayer1 = true;//boolean to track whose turn it is
+
 
 
   public int playerCount = 0;
@@ -95,9 +100,14 @@ public class SushiGoGame
   SushiGoGame(int playerNum)
   {
     //Initialize Players
+    state = 0;
     playerCount = playerNum;
     shuffleArray(gameDeck);
-
+    for(int i = 0; i < 10; ++i)
+    {
+    player1TableCards[i] = " ";
+    player2TableCards[i] = " ";
+    }
     if (playerCount == 2)//10 cards each
     {
       int cardCount = 0;
@@ -109,7 +119,7 @@ public class SushiGoGame
       }
       deckCount = deckCount + 20;
     }
-    else if (playerCount == 3)//9 cards each
+    /*else if (playerCount == 3)//9 cards each
     {
       int cardCount = 0;
       for(int x = deckCount; x < (deckCount+27); x+=3)
@@ -147,9 +157,57 @@ public class SushiGoGame
         cardCount++;
       }
       deckCount = deckCount + 35;
+    }*/
+  }
+  
+  public void updateState(SushiGoClientHandler hand, String input)
+  {
+    if (hand==handler1 && !isPlayer1)
+    {
+      handler1.sendToClient("noturn");
+      return;
+    }
+    if (hand==handler2 && isPlayer1)
+    {
+      handler2.sendToClient("noturn");
+      return;
+    }
+ 
+    int value = Integer.parseInt(input);
+    
+    if(round > 3)
+    {
+       if(playerPoints[0] < playerPoints[1])//depending on who wins it sends to them if they won or lost
+      {
+        handler1.sendToClient("lose");
+        handler2.sendToClient("win");
+      }
+      else
+      {
+        handler2.sendToClient("lose");
+        handler1.sendToClient("win");
+      }
+    }
+    
+    if(isPlayer1)//if it is player 1's turn and it's swithcing to player 2's turn it updates to tell player 1 to wait and player 2 to play
+    {
+       Move(1, value);
+      handler1.sendToClient("wait" + "," + player1Cards[0] + "," + player1Cards[1] + "," + player1Cards[2] + "," + player1Cards[3] + "," + player1Cards[4] + "," + player1Cards[5] + "," + player1Cards[6] + "," + player1Cards[7] + "," + player1Cards[8] + "," + player1Cards[9] + "," + "notableCards" + "," + Integer.toString(playerPoints[0]) + "," + Integer.toString(playerPoints[1]) + "," + player1TableCards[0] + "," + player1TableCards[1] + "," + player1TableCards[2] + "," + player1TableCards[3] + "," + player1TableCards[4] + "," + player1TableCards[5] + "," + player1TableCards[6] + "," + player1TableCards[7] + "," + player1TableCards[8] + "," + player1TableCards[9] + "," + player2TableCards[0] + "," + player2TableCards[1] + "," + player2TableCards[2] + "," + player2TableCards[3] + "," + player2TableCards[4] + "," + player2TableCards[5] + "," + player2TableCards[6] + "," + player2TableCards[7] + "," + player2TableCards[8] + "," + player2TableCards[9] + ",");
+      handler2.sendToClient("play" + "," + player2Cards[0] + "," + player2Cards[1] + "," + player2Cards[2] + "," + player2Cards[3] + "," + player2Cards[4] + "," + player2Cards[5] + "," + player2Cards[6] + "," + player2Cards[7] + "," + player2Cards[8] + "," + player2Cards[9] + "," + "tableCards" + "," + Integer.toString(playerPoints[0]) + "," + Integer.toString(playerPoints[1]) + "," + player1TableCards[0] + "," + player1TableCards[1] + "," + player1TableCards[2] + "," + player1TableCards[3] + "," + player1TableCards[4] + "," + player1TableCards[5] + "," + player1TableCards[6] + "," + player1TableCards[7] + "," + player1TableCards[8] + "," + player1TableCards[9] + "," + player2TableCards[0] + "," + player2TableCards[1] + "," + player2TableCards[2] + "," + player2TableCards[3] + "," + player2TableCards[4] + "," + player2TableCards[5] + "," + player2TableCards[6] + "," + player2TableCards[7] + "," + player2TableCards[8] + "," + player2TableCards[9] + ",");
+      isPlayer1 = false;//switches to player 2's turn
+     
+    }
+    else//if its switching from player 2 to player 1's turn tells player 2 to wait and player 1 to play
+    {
+	Move(2, value);
+        handler2.sendToClient("wait" + "," + player2Cards[0] + "," + player2Cards[1] + "," + player2Cards[2] + "," + player2Cards[3] + "," + player2Cards[4] + "," + player2Cards[5] + "," + player2Cards[6] + "," + player2Cards[7] + "," + player2Cards[8] + "," + player2Cards[9] + "," + "notableCards" + "," + Integer.toString(playerPoints[0]) + "," + Integer.toString(playerPoints[1]) + "," + player1TableCards[0] + "," + player1TableCards[1] + "," + player1TableCards[2] + "," + player1TableCards[3] + "," + player1TableCards[4] + "," + player1TableCards[5] + "," + player1TableCards[6] + "," + player1TableCards[7] + "," + player1TableCards[8] + "," + player1TableCards[9] + "," + player2TableCards[0] + "," + player2TableCards[1] + "," + player2TableCards[2] + "," + player2TableCards[3] + "," + player2TableCards[4] + "," + player2TableCards[5] + "," + player2TableCards[6] + "," + player2TableCards[7] + "," + player2TableCards[8] + "," + player2TableCards[9] + ",");
+        handler1.sendToClient("play" + "," + player1Cards[0] + "," + player1Cards[1] + "," + player1Cards[2] + "," + player1Cards[3] + "," + player1Cards[4] + "," + player1Cards[5] + "," + player1Cards[6] + "," + player1Cards[7] + "," + player1Cards[8] + "," + player1Cards[9] + "," + "tableCards" + "," + Integer.toString(playerPoints[0]) + "," + Integer.toString(playerPoints[1]) + "," + player1TableCards[0] + "," + player1TableCards[1] + "," + player1TableCards[2] + "," + player1TableCards[3] + "," + player1TableCards[4] + "," + player1TableCards[5] + "," + player1TableCards[6] + "," + player1TableCards[7] + "," + player1TableCards[8] + "," + player1TableCards[9] + "," + player2TableCards[0] + "," + player2TableCards[1] + "," + player2TableCards[2] + "," + player2TableCards[3] + "," + player2TableCards[4] + "," + player2TableCards[5] + "," + player2TableCards[6] + "," + player2TableCards[7] + "," + player2TableCards[8] + "," + player2TableCards[9] + ",");
+        isPlayer1 = true;
+	
     }
 
   }
+
   static void shuffleArray(String[] ar)
   {
   // If running on Java 6 or older, use `new Random()` on RHS here
@@ -163,7 +221,7 @@ public class SushiGoGame
       ar[i] = a;
     }
   }
-  public void showCards(int playerNum)
+  /*public void showCards(int playerNum)
   {
     if (playerNum == 1)
     {
@@ -173,6 +231,7 @@ public class SushiGoGame
         {
           int numDisplay = x+1;
           System.out.println(numDisplay + "." + player1Cards[x] + " ");
+	  //handler1.sendToClient(numDisplay + "." + player1Cards[x] + " ");
         }
       }
       else if (playerCount == 3)
@@ -208,6 +267,7 @@ public class SushiGoGame
          {
            int numDisplay = x+1;
            System.out.println(numDisplay + "." + player2Cards[x] + " ");
+          // handler2.sendToClient(numDisplay + "." + player2Cards[x] + " ");
          }
        }
        else if (playerCount == 3)
@@ -289,7 +349,7 @@ public class SushiGoGame
         System.out.print(numDisplay + "." + player5Cards[x] + " ");
       }
     }
-  }
+  }*/
 
   public void Move(int playerNum, int playerChoice)
   {
@@ -309,8 +369,21 @@ public class SushiGoGame
       points(2 , card);
       player2TableCards[player2TableNum] = card;
       player2TableNum++;
+      if(player1TableNum > 9 && player2TableNum > 9)
+      {
+      	countPoints();
+        refreshRound();
+	if(round > 3)
+		endGame();
+	handler1.sendToClient("new");
+        handler2.sendToClient("new");
+	//displayPoints();
+	
+      }
+      else
+      	swapCards();
     }
-    else if (playerNum == 3)
+    /*else if (playerNum == 3)
     {
       String card = player3Cards[cardNum];
       player3Cards[cardNum] = " ";
@@ -333,7 +406,7 @@ public class SushiGoGame
       points(5 , card);
       player5TableCards[player5TableNum] = card;
       player5TableNum++;
-    }
+    }*/
   }
 
   public void displayTableCards()
@@ -341,33 +414,20 @@ public class SushiGoGame
     if (playerCount == 2)
     {
       //Player 1's Screen
-      handler1.sendToClient("Player 1 Collected Cards: ");
+      System.out.println("Player 1 Collected Cards: ");
       for(int x = 0; x < player1TableNum; x++)
       {
         handler1.sendToClient(player1TableCards[x] + ", ");
       }
-      handler1.sendToClient("");
-      handler1.sendToClient("Player 2 Collected Cards: ");
+      System.out.println("");
+      System.out.println("Player 2 Collected Cards: ");
       for(int x = 0; x < player2TableNum; x++)
       {
-        handler1.sendToClient(player2TableCards[x] + ", ");
+        System.out.println(player2TableCards[x] + ", ");
       }
-      handler1.sendToClient("");
-      //Player 2's screen
-      handler2.sendToClient("Player 1 Collected Cards: ");
-      for(int x = 0; x < player1TableNum; x++)
-      {
-        handler2.sendToClient(player1TableCards[x] + ", ");
-      }
-      handler2.sendToClient("");
-      handler2.sendToClient("Player 2 Collected Cards: ");
-      for(int x = 0; x < player2TableNum; x++)
-      {
-        handler2.sendToClient(player2TableCards[x] + ", ");
-      }
-      handler2.sendToClient("");
+      System.out.println("");
     }
-    else if (playerCount == 3)
+    /*else if (playerCount == 3)
     {
       System.out.print("Player 1 Collected Cards: ");
       for(int x = 0; x < player1TableNum; x++)
@@ -447,7 +507,7 @@ public class SushiGoGame
         System.out.print(player5TableCards[x] + ", ");
       }
       System.out.println();
-    }
+    }*/
   }
 
   public void points(int playerNum, String card)
@@ -484,15 +544,15 @@ public class SushiGoGame
         playerPoints[player] = playerPoints[player] + 9;
         playerWasabiCount[player] = playerWasabiCount[player] - 1;
     }
-    else if(card.equals("Maki Roll (1)"))
+    else if(card.equals("Maki_Roll_(1)"))
     {
       playerMakiCount[player] = playerMakiCount[player] + 1;
     }
-    else if(card.equals("Maki Roll (2)"))
+    else if(card.equals("Maki_Roll_(2)"))
     {
       playerMakiCount[player] = playerMakiCount[player] + 2;
     }
-    else if(card.equals("Maki Roll (3)"))
+    else if(card.equals("Maki_Roll_(3)"))
     {
       playerMakiCount[player] = playerMakiCount[player] + 3;
     }
@@ -535,7 +595,7 @@ public class SushiGoGame
         player2Cards[x] = tempArr[x];
       }
     }
-    else if (playerCount == 3)
+    /*else if (playerCount == 3)
     {
       for (int x = 0; x < 10; x++)
       {
@@ -603,7 +663,7 @@ public class SushiGoGame
       {
         player5Cards[x] = tempArr[x];
       }
-    }
+    }*/
   }
   public void countPoints()
   {
@@ -682,14 +742,32 @@ public class SushiGoGame
       player4TableNum = 0;
       player5TableNum = 0;
     }
+    shuffleArray(gameDeck);
+    for(int i = 0; i < 10; ++i)
+    {
+    player1TableCards[i] = " ";
+    player2TableCards[i] = " ";
+    }
+    if (playerCount == 2)//10 cards each
+    {
+      int cardCount = 0;
+      for(int x = deckCount; x < (deckCount+20); x+=2)
+      {
+        player1Cards[cardCount] = gameDeck[x];
+        player2Cards[cardCount] = gameDeck[x+1];
+        cardCount++;
+      }
+      deckCount = deckCount + 20;
+    }
+    round++;
   }
   public void displayPoints()
   {
     for(int x = 0; x < playerCount; x++)
     {
       int player = x+1;
-      handler1.sendToClient("Player " + player + " points: " + playerPoints[x]);
-      handler2.sendToClient("Player " + player + " points: " + playerPoints[x]);
+      System.out.println("Player " + player + " points: " + playerPoints[x]);
+      System.out.println("Player " + player + " points: " + playerPoints[x]);
     }
   }
   public void endGame()
@@ -758,22 +836,21 @@ public class SushiGoGame
     int winner = 6;
     for(int x = 0; x < playerCount; x++)
     {
-      handler1.sendToClient("Player " + (x+1) + " Score: " + playerPoints[x]);
-      handler2.sendToClient("Player " + (x+1) + " Score: " + playerPoints[x]);
+      System.out.println("Player " + (x+1) + " Score: " + playerPoints[x]);
+      System.out.println("Player " + (x+1) + " Score: " + playerPoints[x]);
       if(playerPoints[x] > winnerPoints)
       {
         winnerPoints = playerPoints[x];
         winner = (x+1);
       }
-    }
-    handler1.sendToClient("Player " + winner + " Wins!");
-    handler2.sendToClient("Player " + winner + " Wins!");	
+    }	
   }
 
   public void addHandler(SushiGoClientHandler hand) //adds a handler to the list of handlers
   {
     if(!player1Connected)//nobody is connected
     {
+	state = 1;
         handler1 = hand;
         player1Connected = true;
         handler1.sendToClient("wait");//tells them to wait until all players are connected
@@ -781,9 +858,12 @@ public class SushiGoGame
     else if(!player2Connected)//connects player 2 and gives player one the first play
     {
       handler2 = hand;
+      state = 2;
       player2Connected = true;
-      handler2.sendToClient("wait");//tells player 2 to wait once they are connected because it is player 1's turn
-      handler1.sendToClient("your turn");//tells player 1 to play
+      handler1.sendToClient("new");
+      handler2.sendToClient("new");
+      handler2.sendToClient("wait" + "," + player2Cards[0] + "," + player2Cards[1] + "," + player2Cards[2] + "," + player2Cards[3] + "," + player2Cards[4] + "," + player2Cards[5] + "," + player2Cards[6] + "," + player2Cards[7] + "," + player2Cards[8] + "," + player2Cards[9] + "," + "notableCards" + "," + Integer.toString(playerPoints[0]) + "," + Integer.toString(playerPoints[1]) + "," + player1TableCards[0] + "," + player1TableCards[1] + "," + player1TableCards[2] + "," + player1TableCards[3] + "," + player1TableCards[4] + "," + player1TableCards[5] + "," + player1TableCards[6] + "," + player1TableCards[7] + "," + player1TableCards[8] + "," + player1TableCards[9] + "," + player2TableCards[0] + "," + player2TableCards[1] + "," + player2TableCards[2] + "," + player2TableCards[3] + "," + player2TableCards[4] + "," + player2TableCards[5] + "," + player2TableCards[6] + "," + player2TableCards[7] + "," + player2TableCards[8] + "," + player2TableCards[9] + ",");
+        handler1.sendToClient("play" + "," + player1Cards[0] + "," + player1Cards[1] + "," + player1Cards[2] + "," + player1Cards[3] + "," + player1Cards[4] + "," + player1Cards[5] + "," + player1Cards[6] + "," + player1Cards[7] + "," + player1Cards[8] + "," + player1Cards[9]+ "," + "notableCards" + "," + Integer.toString(playerPoints[0]) + "," + Integer.toString(playerPoints[1]) + "," + player1TableCards[0] + "," + player1TableCards[1] + "," + player1TableCards[2] + "," + player1TableCards[3] + "," + player1TableCards[4] + "," + player1TableCards[5] + "," + player1TableCards[6] + "," + player1TableCards[7] + "," + player1TableCards[8] + "," + player1TableCards[9] + "," + player2TableCards[0] + "," + player2TableCards[1] + "," + player2TableCards[2] + "," + player2TableCards[3] + "," + player2TableCards[4] + "," + player2TableCards[5] + "," + player2TableCards[6] + "," + player2TableCards[7] + "," + player2TableCards[8] + "," + player2TableCards[9] + ",");
     }
   }
 

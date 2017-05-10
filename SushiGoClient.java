@@ -20,6 +20,7 @@ public class SushiGoClient
 			DataOutputStream serverOutput = new DataOutputStream(connectionSock.getOutputStream());
 
 			System.out.println("Connection made.");
+
 			System.out.println("--------------------------------------");
 			System.out.println("WELCOME TO SUSHI-GO!");
 			System.out.println("--------------------------------------");
@@ -29,15 +30,10 @@ public class SushiGoClient
 			Thread theThread = new Thread(listener);
 			theThread.start();
 
-			Scanner keyboard = new Scanner(System.in);
 			while(true)
 			{
-				//String data = keyboard.nextLine();
-				//serverOutput.writeBytes(data + "\n");
 				if(listener.readOutput)
 				{
-					//String data = keyboard.nextLine();
-					//serverOutput.writeBytes(data + "\n");
 					serverOutput.writeBytes(listener.outputString+"\n");
 					listener.readOutput = false;
 				}
