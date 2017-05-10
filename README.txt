@@ -15,7 +15,7 @@ DUSTIN LIU:
 
 MARCUS CHONG:
 - documentation and creation of the multithreaded server and client
-- GUI research
+- implementation of the game code into the server/client code
 
 BRIAN DO:
 - documentation and creation of the multithreaded server and client
