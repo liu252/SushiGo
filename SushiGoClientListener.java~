@@ -44,20 +44,20 @@ public class SushiGoClientListener implements Runnable
 						//test
 						
 
-						//SushiGoServer.game.showCards(1);
-						//SushiGoServer.game.showCards(2);
+						SushiGoServer.game.showCards(1);
+						SushiGoServer.game.showCards(2);
 							
-						//Scanner keyboard = new Scanner(System.in);
-						//cardNum = keyboard.nextInt();
+						Scanner keyboard = new Scanner(System.in);
+						cardNum = keyboard.nextInt();
 							
 						
-						//SushiGoServer.game.Move(1, cardNum);
-						//SushiGoServer.game.isPlayer1 = false;
-						//System.out.println("end of player 1 turn");
+						SushiGoServer.game.Move(1, cardNum);
+						SushiGoServer.game.isPlayer1 = false;
+						System.out.println("end of player 1 turn");
 
 						//test
 						//Each Client has their own player 1 and player 2 hands. Still a working progress
-						if (SushiGoServer.game.isPlayer1)
+						/*if (SushiGoServer.game.isPlayer1)
 						{
 							SushiGoServer.game.showCards(1);
 							SushiGoServer.game.showCards(2);
@@ -91,7 +91,7 @@ public class SushiGoClientListener implements Runnable
 									SushiGoServer.game.refreshRound();
 							}
 							System.out.println("end of player 2 turn");
-						}
+						}*/
 						
 						
 						//Turn the string into the proper format

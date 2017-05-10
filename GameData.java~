@@ -1,0 +1,6 @@
+
+
+public class GameData
+{
+	public static SushiGoGame game = new SushiGoGame(2); //creates a game object to use to reference all the methods of the game class
+}

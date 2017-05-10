@@ -787,5 +787,6 @@ public class SushiGoGame
     }
   }
 
+  public static SushiGoGame game = new SushiGoGame(2);
 
 }

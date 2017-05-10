@@ -31,7 +31,7 @@ public class SushiGoServer
 					SushiGoClientHandler handler = new SushiGoClientHandler(connectionSock, this.socketList);
 					Thread theThread = new Thread(handler);
 					theThread.start();
-					game.addHandler(handler);
+					GameData.game.addHandler(handler);
 			}
 		}
 		catch(IOException e)

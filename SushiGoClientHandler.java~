@@ -10,7 +10,7 @@ public class SushiGoClientHandler implements Runnable
 {
 	private Socket connectionSock = null;
 	private ArrayList<Socket> socketList;
-	//SushiGoGame game = null;
+	SushiGoGame game = null;
 
 	//Constructor implemented in Sushi Go Server class.
 	SushiGoClientHandler(Socket sock, ArrayList<Socket> socketList)
