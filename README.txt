@@ -27,7 +27,5 @@ GOALS
 - working command line implementation of the game
 - working command line implementation of the game with user-selected amount of players
 - abstract submission
-- GUI drafting and creation
-- GUI implementation of the game
 - poster drafting and creation
 - presentation 
